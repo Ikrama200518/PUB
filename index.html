@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Encryption/Decryption Tool</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: block;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 600px;
+        }
+        h1 {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Encryption/Decryption Tool</h1>
+        <textarea id="inputText" class="form-control" placeholder="Enter your text here..."></textarea>
+        <button class="btn btn-primary" onclick="encrypt()">Encrypt</button>
+        <textarea id="outputText" class="form-control" placeholder="Your encrypted text will appear here..."></textarea>
+        <button class="btn btn-secondary" onclick="decrypt()">Decrypt</button>
+        <textarea id="outputTextDecrypted" class="form-control" placeholder="Your decrypted text will appear here..."></textarea>
+    </div>
+
+    <script>
+        const Store = ['7', 't', '5', 'q', '9', 't', '0', 'b', 'w', '8', 'c', 'm', '6', 'p', '4', 'n', '2', 'e', 'g', 'x', 'z', 'p', '1', 'h', 'f', '3'];
+        
+        function encrypt() {
+            let inputText = document.getElementById("inputText").value.toLowerCase();
+            let outputText = "";
+            
+            for (let i = 0; i < inputText.length; i++) {
+                if (inputText[i] === ' ') {
+                    outputText += '-';
+                } else {
+                    let variable = inputText.charCodeAt(i) - 97;
+                    if (variable >= 0 && variable < 26) {
+                        outputText += Store[variable];
+                    } else {
+                        outputText += inputText[i];
+                    }
+                }
+            }
+            
+            document.getElementById("outputText").value = outputText;
+        }
+
+        function decrypt() {
+            let inputText = document.getElementById("outputText").value;
+            let outputText = "";
+            
+            for (let i = 0; i < inputText.length; i++) {
+                if (inputText[i] === '-') {
+                    outputText += ' ';
+                } else {
+                    let index = Store.indexOf(inputText[i]);
+                    if (index !== -1) {
+                        outputText += String.fromCharCode(index + 97);
+                    } else {
+                        outputText += inputText[i];
+                    }
+                }
+            }
+            
+            document.getElementById("outputTextDecrypted").value = outputText;
+        }
+    </script>
+</body>
+</html>
